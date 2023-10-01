@@ -72,7 +72,9 @@ print("It took", count, "tries to get at least one success.")
 ```
 Результат: It took 8 tries to get at least one success.
 
--Ссылка на гугл таблицу https://docs.google.com/spreadsheets/d/1OXSm279BWmZqvQSIAJn7Q_ox-OlH3nsyPfYlKqweCS8/edit#gid=0 (Там отображен график зависимости шанса выпадения от количества круток)
+-Ссылка на гугл таблицу https://docs.google.com/spreadsheets/d/1OXSm279BWmZqvQSIAJn7Q_ox-OlH3nsyPfYlKqweCS8/edit#gid=0 
+
+Средствами google-sheets визуализиция данных в google-таблице(график зависимости шанса выпадения от количества круток)![2023-10-01_21-19-51](https://github.com/MikhailBrovin/dz2/assets/146543564/17da7172-975d-44af-a2df-b547897da6d7)
 
 ## Задание 3. Настройте на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения выбранной переменной. Например, если выбрано здоровье главного персонажа вы можете выводить сообщения, связанные с его состоянием.
 
