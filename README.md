@@ -62,6 +62,7 @@ count = 0
 chance = 1
 
 while not success:
+    sh.sheet1.clear()
     count += 1
     if random.random() < chance/100:
         success = True
