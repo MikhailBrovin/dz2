@@ -79,8 +79,81 @@ print("It took", count, "tries to get at least one success.")
 
 ## Задание 3. Настройте на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения выбранной переменной. Например, если выбрано здоровье главного персонажа вы можете выводить сообщения, связанные с его состоянием.
 
-Задание 3 выполнить не удалось из-за недостатка знаний в сфере программирования, когда я выполнял задание номер 3 мне не удалось воспроизвести звук из-за ошибки:
-The given key 'Mon_1' was not present in the dictionary. System.Collections.Generic.Dictionary`2[TKey,TValue].get_Item (TKey key) (at <787acc3c9a4c471ba7d971300105af24>:0) NewBehaviourScript.Update () (at Assets/Script/NewBehaviourScript.cs:26), похожая была в группе, звук воспроизводился вне запуска сцены, но при запуске сцены ничего не происходило, я хотел подставить звук выпадения (или не выпадения) 5 зведочного персонажа в зависимости от номера крутки, но из-за недостатка знаний, мне это не удалось.
+В данном задании я решил воспроизвести звуки выпадения звездочного персонажа, на юнити, с помощью этого кода юнити считывал гугл таблицу и воспроизводил нужный звук, а именно звук выпадения 5 звездочного персонажа или обычную прокрутку.
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+using SimpleJSON;
+
+public class NewBehaviourScript : MonoBehaviour
+{
+    public AudioClip goodSpeak;
+    public AudioClip badSpeak;
+    private AudioSource selectAudio;
+    private Dictionary<string,float> dataSet = new Dictionary<string, float>();
+    private bool statusStart = false;
+    private int i = 1;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(GoogleSheets());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (i > dataSet.Count) return;
+        
+        if (dataSet["Res_" + i.ToString()] >= 100 & statusStart == false & i <= dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioGood());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+
+        if (dataSet["Mon_" + i.ToString()] >= 100 & statusStart == false & i != dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioBad());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+    }
+
+    IEnumerator GoogleSheets()
+    {
+        UnityWebRequest curentResp = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/1OXSm279BWmZqvQSIAJn7Q_ox-OlH3nsyPfYlKqweCS8/edit#gid=0/Лист1?key=AIzaSyBYZL4JWVCTZTo25QUYE2FbUS7BrpTOwhU");
+        yield return curentResp.SendWebRequest();
+        string rawResp = curentResp.downloadHandler.text;
+        var rawJson = JSON.Parse(rawResp);
+        foreach (var itemRawJson in rawJson["values"])
+        {
+            var parseJson = JSON.Parse(itemRawJson.ToString());
+            var selectRow = parseJson[0].AsStringList;
+            dataSet.Add(("Mon_" + selectRow[0]), float.Parse(selectRow[2]));
+        }
+    }
+
+    IEnumerator PlaySelectAudioGood()
+    {
+        statusStart = true;
+        selectAudio = GetComponent<AudioSource>();
+        selectAudio.clip = goodSpeak;
+        selectAudio.Play();
+        yield return new WaitForSeconds(3);
+        statusStart = false;
+        i++;
+    }
+    IEnumerator PlaySelectAudioBad()
+    {
+        statusStart = true;
+        selectAudio = GetComponent<AudioSource>();
+        selectAudio.clip = badSpeak;
+        selectAudio.Play();
+        yield return new WaitForSeconds(4);
+        statusStart = false;
+        i++;
+    }
+}
 
 ## Выводы
 Абзац умных слов о том, что было сделано и что было узнано.
