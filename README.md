@@ -80,14 +80,16 @@ print("It took", count, "tries to get at least one success.")
 ## Задание 3. Настройте на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения выбранной переменной. Например, если выбрано здоровье главного персонажа вы можете выводить сообщения, связанные с его состоянием.
 
 В данном задании я решил воспроизвести звуки выпадения звездочного персонажа, на юнити, с помощью этого кода юнити считывал гугл таблицу и воспроизводил нужный звук, а именно звук выпадения 5 звездочного персонажа или обычную прокрутку.
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
-using SimpleJSON;
-
-public class NewBehaviourScript : MonoBehaviour
 {
+
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Networking;
+    using SimpleJSON;
+    
+    public class NewBehaviourScript : MonoBehaviour
+
     public AudioClip goodSpeak;
     public AudioClip badSpeak;
     private AudioSource selectAudio;
